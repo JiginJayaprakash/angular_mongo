@@ -7,7 +7,7 @@ namespace webapiproj.DataLayer
     public class ProductData
     {
         const string connectionUri = "mongodb+srv://jayaprakashjigin:j7oQyf3L4q7gvT0b@cluster0.dhenovx.mongodb.net/?retryWrites=true&w=majority";
-        private dynamic productCollection;
+        IMongoCollection<Product> productCollection;
         public ProductData()
         {
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
@@ -20,12 +20,12 @@ namespace webapiproj.DataLayer
             {
                 var result = client.GetDatabase("admin").RunCommand<BsonDocument>(new BsonDocument("ping", 1));
                 Console.WriteLine("Pinged your deployment. You successfully connected to MongoDB!");
+                productCollection = client.GetDatabase("product").GetCollection<Product>("product");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            productCollection = client.GetDatabase("product").GetCollection<Product>("product");
         }
 
         public bool Save(string description)
@@ -45,7 +45,9 @@ namespace webapiproj.DataLayer
 
         public List<Product> GetAll()
         {
-            List<Product> results = productCollection.ToList();
+            FilterDefinition<Product> filter = Builders<Product>.Filter.Empty;
+            
+            List<Product> results = productCollection.Find(filter).ToList();
             return results;
         }
         

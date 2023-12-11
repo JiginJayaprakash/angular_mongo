@@ -12,6 +12,13 @@ public class ProductController : ControllerBase
     public IEnumerable<Product> Get()
     {
         ProductData _productData = new ProductData();
-        return Json(_productData.GetAll());
+        return _productData.GetAll();
+    }
+
+    [HttpPost(Name = "SaveProduct")]
+    public bool Save(Product data)
+    {
+        ProductData _productData = new ProductData();
+        return _productData.Save(data.description);
     }
 }

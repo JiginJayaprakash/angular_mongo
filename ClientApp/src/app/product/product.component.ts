@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit{
       .subscribe({
         next: (data) => {
           this.products = data;
-          console.log(data);
+          this.product.description = '';
+         
         },
         error: (e) => console.error(e)
       });
@@ -35,15 +36,11 @@ export class ProductComponent implements OnInit{
     this.productService.create(data)
       .subscribe({
         next: (res: boolean) => {
-          console.log(res);
+          if(res){
+            this.retrieveProducts();
+          }
         },
         error: (e: any) => console.error(e)
       });
-  }
-
-  newProduct(): void {
-    this.product = {
-      description: ''
-    };
   }
 }
