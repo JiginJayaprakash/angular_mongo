@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using webapiproj.DataLayer;
 using webapiproj.Objects;
+using Microsoft.Extensions.Configuration;
 
 namespace webapiproj.Controllers;
 
@@ -8,17 +9,24 @@ namespace webapiproj.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
+    ProductData _productData ;
+    private readonly IConfiguration _configuration;
+
+    public ProductController(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        _productData = new ProductData(_configuration.GetValue<string>("Data:DefaultConnection:ConnectionString"));
+    }
+
     [HttpGet(Name = "GetProduct")]
     public IEnumerable<Product> Get()
     {
-        ProductData _productData = new ProductData();
         return _productData.GetAll();
     }
 
     [HttpPost(Name = "SaveProduct")]
     public bool Save(Product data)
     {
-        ProductData _productData = new ProductData();
         return _productData.Save(data.description);
     }
 }

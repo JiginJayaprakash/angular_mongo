@@ -6,9 +6,8 @@ namespace webapiproj.DataLayer
 {
     public class ProductData
     {
-        const string connectionUri = "mongodb+srv://jayaprakashjigin:j7oQyf3L4q7gvT0b@cluster0.dhenovx.mongodb.net/?retryWrites=true&w=majority";
         IMongoCollection<Product> productCollection;
-        public ProductData()
+        public ProductData(string connectionUri)
         {
             var settings = MongoClientSettings.FromConnectionString(connectionUri);
             // Set the ServerApi field of the settings object to Stable API version 1

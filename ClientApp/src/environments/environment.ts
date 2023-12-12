@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://turbo-happiness-wr7j6jwg5xxqf9g6-5134.app.github.dev'
 };
 
 /*

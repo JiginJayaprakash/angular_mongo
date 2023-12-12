@@ -5,7 +5,8 @@
     "outDir": "./out-tsc/app",
     "types": [
       "jquery",
-      "ej.web.all"
+      "ej.web.all",
+      "node"
     ]
   },
   "files": [
